@@ -25,9 +25,6 @@ computeEmpiricalIICR <- function(T2values, tVector){
   #
   # Returns:
   #   a list of two vectors: the tVector and the corresponding IICR values
-  
-  T2values <- simulateT2(msCommand)
-  tVector <- seq(0, 3, 0.01)
   if(max(T2values) > max(tVector)) tVector <- c(tVector, max(T2values))
   counts <- hist(T2values, breaks = tVector)$counts
   fx <- counts / (tVector[-1] - tVector[-length(tVector)])
@@ -37,9 +34,9 @@ computeEmpiricalIICR <- function(T2values, tVector){
 }
 
 msCommand <- "ms 2 100000 -T"
-msCommandNislands <- "ms 2 100000 -I 10 2 0 0 0 0 0 0 0 0 0 -T"
+msCommandNislands <- "ms 2 1000000 -T -I 10 2 0 0 0 0 0 0 0 0 0 1"
 
-tVector <- seq(0, 5, 0.01)
+tVector <- seq(0, 10, 0.01)
 testT2 <- simulateT2(msCommandNislands)
 test <- computeEmpiricalIICR(testT2, tVector)
 plot(test$tVector, test$IICR, type = 's')
